@@ -32,6 +32,8 @@ public class UrlPathHashLoadBalancerClientFilter implements GlobalFilter, Ordere
 
     private GatewayLoadBalancerProperties properties;
 
+    private static final String SCHEME_PREFIX = "urlhash";
+
     public UrlPathHashLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory,
                                                GatewayLoadBalancerProperties properties) {
         this.clientFactory = clientFactory;
@@ -48,7 +50,7 @@ public class UrlPathHashLoadBalancerClientFilter implements GlobalFilter, Ordere
         URI url = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);
         String schemePrefix = exchange.getAttribute(GATEWAY_SCHEME_PREFIX_ATTR);
         if (url == null
-                || (!"iphash".equals(url.getScheme()) && !"iphash".equals(schemePrefix))) {
+                || (!SCHEME_PREFIX.equals(url.getScheme()) && !SCHEME_PREFIX.equals(schemePrefix))) {
             return chain.filter(exchange);
         }
         addOriginalRequestUrl(exchange, url);

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@LoadBalancerClient(value = "location-client",configuration = UrlPathHashLoadBalancerClientConfiguration.class)
+@LoadBalancerClient(value = "TO_BE_ADDED",configuration = UrlPathHashLoadBalancerClientConfiguration.class)
 public class UrlPathHashConfiguration {
 
     @Bean

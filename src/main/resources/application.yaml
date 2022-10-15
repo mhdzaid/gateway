@@ -12,7 +12,8 @@ spring:
     gateway:
       routes:
         - id: location
-          uri: iphash://location-client
+#          use "urlhash" instead of "lb" to use UrlPathHashLoadBalancer and give the id value in UrlPathHashConfiguration
+          uri: lb://location-writer-client
           predicates:
             - Path=/api/location/**
         - id: user
