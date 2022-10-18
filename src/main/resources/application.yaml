@@ -11,11 +11,11 @@ spring:
         hostname:
     gateway:
       routes:
-        - id: location
+        - id: location-writer
 #          use "urlhash" instead of "lb" to use UrlPathHashLoadBalancer and give the id value in UrlPathHashConfiguration
           uri: lb://location-writer-client
           predicates:
-            - Path=/api/location/**
+            - Path=/api/location/user/**
         - id: user
           uri: lb://user-client
           predicates:

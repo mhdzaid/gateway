@@ -45,6 +45,12 @@ public class UrlPathHashLoadBalancerClientFilter implements GlobalFilter, Ordere
         return LOAD_BALANCER_CLIENT_FILTER_ORDER;
     }
 
+    /**
+     * Injects our custom UrlPathHashLoadBalancer based on schema in application.yaml to replace "lb://"
+     * @param exchange the current server exchange
+     * @param chain provides a way to delegate to the next filter
+     * @return
+     */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         URI url = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);

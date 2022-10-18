@@ -28,6 +28,11 @@ public class UrlPathHashLoadBalancer implements ReactorServiceInstanceLoadBalanc
         this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
     }
 
+    /**
+     * Selecting which server should handle the request
+     * @param request - an input request
+     * @return
+     */
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
         if (serviceInstanceListSupplierProvider != null) {
@@ -39,7 +44,12 @@ public class UrlPathHashLoadBalancer implements ReactorServiceInstanceLoadBalanc
     }
 
 
-
+    /**
+     * Custom load balancer implementation for server stickiness using source path
+     * @param request
+     * @param instances
+     * @return
+     */
     private Response<ServiceInstance> getInstanceResponse(
             Request request,
             List<ServiceInstance> instances) {
@@ -48,8 +58,8 @@ public class UrlPathHashLoadBalancer implements ReactorServiceInstanceLoadBalanc
             return new EmptyResponse();
         }
 
-        String ip = (String) request.getContext();
-        int hash = Math.abs(ip.hashCode());
+        String sourcePath = (String) request.getContext();
+        int hash = Math.abs(sourcePath.hashCode());
         int pos = hash % instances.size();
         ServiceInstance instance = instances.get(pos);
         return new DefaultResponse(instance);
